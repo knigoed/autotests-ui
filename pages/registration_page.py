@@ -11,17 +11,15 @@ class RegistrationPage(BasePage):
         self.registration_button = page.get_by_test_id('registration-page-registration-button')
         self.login_link = page.get_by_test_id('registration-page-login-link')
 
-    def fill_registration_form(self, email="user.name@gmail.com",
-                                     username="username",
-                                     password="password"):
+    def fill_registration_form(self, email: str, username: str, password: str):
         self.email_input.fill(email)
-        expect(self.email_input).to_have_value('user.name@gmail.com')
+        expect(self.email_input).to_have_value(email)
 
         self.username_input.fill(username)
-        expect(self.username_input).to_have_value('username')
+        expect(self.username_input).to_have_value(username)
 
         self.password_input.fill(password)
-        expect(self.password_input).to_have_value('password')
+        expect(self.password_input).to_have_value(password)
 
     def click_registration_button(self):
         self.registration_button.click()
