@@ -4,26 +4,20 @@ from typing import Literal
 
 
 class ChartViewComponent(BaseComponent):
-    TITLES = {
-        "students": "Students",
-        "activities": "Activities",
-        "courses": "Courses",
-        "scores": "Scores",
-    }
-
-    def __init__(self, page: Page,
+   def __init__(self,
+                 page: Page,
                  identifier: Literal['students', 'activities', 'courses', 'scores'],
                  chart_type: Literal['bar', 'line', 'pie', 'scatter']):
-        super().__init__(page)
 
-        self.identifier = identifier
+        super().__init__(page)
 
         self.title = page.get_by_test_id(f'{identifier}-widget-title-text')
         self.chart = page.get_by_test_id(f'{identifier}-{chart_type}-chart')
 
-    def check_visible(self):
+   def check_visible(self, title: str):
         expect(self.title).to_be_visible()
-        expect(self.title).to_have_text(self.TITLES[self.identifier])
+        expect(self.title).to_have_text(title)
+
         expect(self.chart).to_be_visible()
 
 
