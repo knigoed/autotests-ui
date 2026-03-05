@@ -15,7 +15,7 @@ class CoursesListToolbarViewComponent(BaseComponent):
             page, 'courses-list-toolbar-create-course-button', 'Create Courses'
         )
 
-    @allure.step('Check visible courses list toolbar')
+    @allure.step('Check visible courses list toolbar view')
     def check_visible(self):
         self.title.check_visible()
         self.title.check_have_text('Courses')
