@@ -46,6 +46,10 @@ jobs:
           allure_results: allure-results
           allure_history: allure-history
 
+      - name: Generate Allure report
+        run: |
+          allure generate allure-results -o allure-report --clean
+
       - name: Debug (check files)
         if: always()
         run: |
