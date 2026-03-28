@@ -46,10 +46,6 @@ jobs:
           allure_results: allure-results
           allure_history: allure-history
 
-      - name: Generate Allure report
-        run: |
-          allure generate allure-results -o allure-report --clean
-
       - name: Debug (check files)
         if: always()
         run: |
@@ -60,4 +56,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-report
+          publish_dir: ./allure-history
