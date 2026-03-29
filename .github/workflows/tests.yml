@@ -30,10 +30,11 @@ jobs:
           pip install -r requirements.txt
           playwright install --with-deps
 
-      - name: Run Playwright tests with pytest and generate Allure results
+      - name: Run tests with pytest + Allure
         run: |
-          pytest -m regression --alluredir=./allure-results --numprocesses 2
+          pytest -m regression --alluredir=allure-results --numprocesses 2
 
+      # ⬇️ Забираем старую историю (если есть)
       - name: Get Allure history
         uses: actions/checkout@v3
         if: always()
@@ -42,21 +43,29 @@ jobs:
           ref: gh-pages
           path: gh-pages
 
-      - name: Allure report action fron marketplace
-        uses:  andgineer/allure-report@v3
+      # ⬇️ Генерация отчёта
+      - name: Generate Allure report
+        uses: andgineer/allure-report@v3
         if: always()
         with:
           allure_results: allure-results
-          allure_history: allure-history
+          allure_history: gh-pages
 
-      - name: Debug (check files)
+      # ⬇️ Дебаг (очень полезно оставить)
+      - name: Debug files
         if: always()
         run: |
+          echo "ROOT:"
           ls -la
+          echo "ALLURE-REPORT:"
+          ls -la allure-report || echo "no allure-report"
+          echo "ALLURE-HISTORY:"
           ls -la allure-history || echo "no allure-history"
 
-      - name: Deploy report to Github Pages
+      # ⬇️ Публикация в gh-pages
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
+        if: always()
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./allure-history
+          publish_dir: ./allure-report
