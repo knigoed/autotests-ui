@@ -36,10 +36,14 @@ jobs:
           ls -la allure-results || echo "NO RESULTS"
 
       # Устанавливаем Allure CLI
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
       - name: Install Allure
         run: |
-          sudo apt-get update
-          sudo apt-get install -y default-jre allure
+          npm install -g allure-commandline --save-dev
 
       # Генерируем HTML отчёт
       - name: Generate Allure report
