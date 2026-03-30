@@ -31,9 +31,17 @@ jobs:
         run: |
           pytest -m regression --alluredir=allure-results
 
-      - name: Check allure results
+      # 👇 ВАЖНО: сначала тянем старый отчет
+      - name: Load previous report history
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: gh-pages
+
+      - name: Copy history
         run: |
-          ls -la allure-results || echo "NO RESULTS"
+          mkdir -p allure-results/history
+          cp -r gh-pages/history/* allure-results/history || true
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -44,25 +52,9 @@ jobs:
         run: |
           npm install -g allure-commandline --save-dev
 
-      - name: Copy history
-        run: |
-          mkdir -p allure-results/history
-          cp -r gh-pages/history/* allure-results/history || true
-
-      - name: Debug report
-        run: |
-          ls -la
-          ls -la allure-report
-
       - name: Generate Allure report
         run: |
           allure generate allure-results -o allure-report --clean
-
-      - name: Load previous report history
-        uses: actions/checkout@v3
-        with:
-          ref: gh-pages
-          path: gh-pages
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
