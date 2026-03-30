@@ -31,7 +31,6 @@ jobs:
         run: |
           pytest -m regression --alluredir=allure-results
 
-      # 👇 ВАЖНО: сначала тянем старый отчет
       - name: Load previous report history
         uses: actions/checkout@v3
         with:
