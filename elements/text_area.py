@@ -4,7 +4,7 @@ import allure
 from tools.logger import get_logger
 from ui_coverage_tool import ActionType
 
-logger = get_logger('TEXTAREA')_
+logger = get_logger('TEXTAREA')
 
 class Textarea(BaseElement):
     @property
